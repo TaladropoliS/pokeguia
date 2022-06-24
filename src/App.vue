@@ -42,10 +42,10 @@
         </div>
 
         <br>
-        <h5 class="text-center fw-bold">Movies</h5>
+        <h5 class="text-center fw-bold">Movimientos</h5>
         <div class="row justify-content-center">
           <div class="card col-3 d-flex h6 my-auto mb-1"
-               v-for="(peli, index) in pokemon['peliculas']">{{ peli }}
+               v-for="(peli, index) in pokemon['movimientos']">{{ peli }}
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@
           'nombre': '',
           'habilidades': [],
           'imagen': [],
-          'peliculas': [],
+          'movimientos': [],
         },
         nombres: [],
         // nombre: '',
@@ -90,28 +90,28 @@
           this.pokemon['nombre'] = 'ESE POKEMON NO EXISTE'
           this.pokemon['habilidades'] = ''
           this.pokemon['imagen'] = ''
-          this.pokemon['peliculas'] = ''
+          this.pokemon['movimientos'] = ''
         } else {
           pk = pk.toLowerCase()
           try {
             const pokemonApi = await fetch(`https://pokeapi.co/api/v2/pokemon/${pk}`)
             const pokemonLlamado = await pokemonApi.json()
-            // console.log(pokemonLlamado)
+            console.log(pokemonLlamado)
             this.pokemon['nombre'] = pokemonLlamado.name
             this.pokemon['habilidades'] = []
             for (let i of pokemonLlamado.abilities) {
               this.pokemon['habilidades'].push(i['ability']['name'])
             }
-            this.pokemon['peliculas'] = []
+            this.pokemon['movimientos'] = []
             for (let i of pokemonLlamado.moves) {
-              this.pokemon['peliculas'].push(i['move']['name'])
+              this.pokemon['movimientos'].push(i['move']['name'])
             }
             this.pokemon['imagen'] = pokemonLlamado.sprites.front_default
           } catch (error) {
             this.pokemon['nombre'] = 'POKEMON NO EXISTE'
             this.pokemon['habilidades'] = ''
             this.pokemon['imagen'] = ''
-            this.pokemon['peliculas'] = ''
+            this.pokemon['https://pokeapi.co/api/v2/move/5/'] = ''
             console.warn(error)
             this.poke = ''
           }
@@ -125,7 +125,7 @@
           const nombresLlamados = await nombresApi.json()
           const nombresLlamadosResult = nombresLlamados.results
           for (let i of nombresLlamadosResult) {
-            // console.log(i['name'])
+            console.log(i['name'])
             this.nombres.push(i['name'])
           }
         } catch (error) {
