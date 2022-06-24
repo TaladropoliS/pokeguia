@@ -2,7 +2,10 @@
   <div id="app">
     <!--    <img alt="Vue logo" src="./assets/logo.png">-->
     <!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-
+<div class="col-6 col-sm-4 col-md-2 mx-auto text-center">
+  <img class="img-fluid"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/250px-International_Pok%C3%A9mon_logo.svg.png" alt="">
+</div>
     <div class="col-10 col-md-6 mx-auto mb-5">
       <div class="card p-3 col-6 mx-auto">
         <input type="text" v-model="poke" class="form-control"
@@ -13,16 +16,24 @@
         </button>
       </div>
 
-      <div class="row justify-content-center">
-        <div class="card col-3 d-flex h6 my-auto mb-1">
+      <div v-if="nombre" class="row justify-content-center">
+        <div class="card col-4 d-flex h6 my-auto mb-1">
           {{ nombre }}
+        </div>
+      </div>
+
+<!--            <div v-if="coincidencias.length" class="row justify-content-center my-3">-->
+      <div class="row justify-content-center my-3">
+        <div v-for="(coin, index) in coincidencias" :key="index"
+            class="card col-3 d-flex h6 my-auto mb-1">
+          {{coin}}
         </div>
       </div>
 
       <div class="card p-3">
         <h3 v-if="pokemon['nombre'] === 'POKEMON NO EXISTE'"
             class="text-uppercase fw-bold text-danger">
-            {{ pokemon['nombre'] }}
+          {{ pokemon['nombre'] }}
         </h3>
         <h3 v-else class="text-uppercase fw-bold">{{ pokemon['nombre'] }}</h3>
 
@@ -70,15 +81,20 @@
           'movimientos': [],
         },
         nombres: [],
-        // nombre: '',
-        poke: ''
+        poke: '',
+        coincidencias: []
       }
     },
 
     computed: {
       nombre: function () {
-        if (this.poke.length > 1) {
+        if (this.poke.length > 2) {
           console.log(this.poke)
+          for(let n of this.nombres){
+            if (this.poke === n.substr(0,this.poke.length)){
+              this.coincidencias.push(n)
+            }
+          }
           return this.poke
         }
       }
@@ -86,6 +102,7 @@
 
     methods: {
       async llamarApiPokemon(pk) {
+        this.coincidencias = []
         if (!pk) {
           this.pokemon['nombre'] = 'ESE POKEMON NO EXISTE'
           this.pokemon['habilidades'] = ''
@@ -107,11 +124,12 @@
               this.pokemon['movimientos'].push(i['move']['name'])
             }
             this.pokemon['imagen'] = pokemonLlamado.sprites.front_default
+
           } catch (error) {
             this.pokemon['nombre'] = 'POKEMON NO EXISTE'
             this.pokemon['habilidades'] = ''
             this.pokemon['imagen'] = ''
-            this.pokemon['https://pokeapi.co/api/v2/move/5/'] = ''
+            this.pokemon['movimientos'] = ''
             console.warn(error)
             this.poke = ''
           }
@@ -125,7 +143,7 @@
           const nombresLlamados = await nombresApi.json()
           const nombresLlamadosResult = nombresLlamados.results
           for (let i of nombresLlamadosResult) {
-            console.log(i['name'])
+            // console.log(i['name'])
             this.nombres.push(i['name'])
           }
         } catch (error) {
