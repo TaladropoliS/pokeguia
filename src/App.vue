@@ -8,7 +8,8 @@
 </div>
     <div class="col-10 col-md-6 mx-auto mb-5">
       <div class="card p-3 col-6 mx-auto">
-        <input type="text" v-model="poke" class="form-control"
+        <input type="text" v-model="poke" @keyup.enter="llamarApiPokemon(poke)"
+               class="form-control"
                placeholder="Por ejemplo PIKACHU"/>
         <button class="btn btn-primary btn-sm"
                 @click="llamarApiPokemon(poke)">
@@ -45,7 +46,7 @@
              class="img-fluid card-img-top mx-auto" width="auto" height="auto">
         <br>
 
-        <h5 class="text-center fw-bold">Habilidades</h5>
+        <h5 v-if="pokemon['nombre'] !== 'POKEMON NO EXISTE'" class="text-center fw-bold">Habilidades</h5>
         <div class="row justify-content-center">
           <div class="card col-3 d-flex h6 my-auto mb-1"
                v-for="(hab, index) in pokemon['habilidades']">{{ hab }}
@@ -53,7 +54,7 @@
         </div>
 
         <br>
-        <h5 class="text-center fw-bold">Movimientos</h5>
+        <h5 v-if="pokemon['nombre'] !== 'POKEMON NO EXISTE'" class="text-center fw-bold">Movimientos</h5>
         <div class="row justify-content-center">
           <div class="card col-3 d-flex h6 my-auto mb-1"
                v-for="(peli, index) in pokemon['movimientos']">{{ peli }}
