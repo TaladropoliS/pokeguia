@@ -125,6 +125,7 @@
             }
             this.pokemon['imagen'] = pokemonLlamado.sprites.front_default
 
+            this.poke = ''
             this.loading = false;
             this.pokemon['existe'] = true
 
@@ -150,9 +151,10 @@
           const nombresLlamados = await nombresApi.json()
           const nombresLlamadosResult = nombresLlamados.results
           for (let i of nombresLlamadosResult) {
-            console.log(i['name'])
-            // this.nombres.push(i['name'])
+            // console.log(i['name'])
+            this.nombres.push(i['name'])
           }
+          console.log(this.nombres)
         } catch (error) {
           console.warn(error)
         }
@@ -172,7 +174,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 #imgPoke {
