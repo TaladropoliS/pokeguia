@@ -42,8 +42,11 @@
              class="img-fluid card-img-top mx-auto" width="auto" height="auto">
         <br>
 
-<!--        <h5 v-if="pokemon['nombre'] !== 'POKEMON NO EXISTE'" class="text-center fw-bold">Habilidades</h5>-->
-        <h5 v-show="pokemon['existe']" class="text-center fw-bold">Habilidades</h5>
+        <!--        <h5 v-if="pokemon['nombre'] !== 'POKEMON NO EXISTE'" class="text-center fw-bold">Habilidades</h5>-->
+        <h5 v-show="pokemon['existe']"
+            :class="pokemon['habilidades'].length?'text-center fw-bold':'d-none'">
+          Habilidades
+        </h5>
         <div class="row justify-content-center">
           <div class="card col-3 d-flex h6 my-auto mb-1"
                v-for="(hab, index) in pokemon['habilidades']">{{ hab }}
@@ -51,7 +54,10 @@
         </div>
 
         <br>
-        <h5 v-show="pokemon['existe']" class="text-center fw-bold">Movimientos</h5>
+        <h5 v-show="pokemon['existe']"
+            :class="pokemon['movimientos'].length? 'text-center fw-bold':'d-none'">
+          Movimientos
+        </h5>
         <div class="row justify-content-center">
           <div class="card col-3 d-flex h6 my-auto mb-1"
                v-for="(movi, index) in pokemon['movimientos']">{{ movi }}
