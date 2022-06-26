@@ -3,9 +3,11 @@
     <!--    <img alt="Vue logo" src="./assets/logo.png">-->
     <!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <div class="col-6 col-sm-4 col-md-2 mx-auto text-center">
-      <img class="img-fluid"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/250px-International_Pok%C3%A9mon_logo.svg.png"
-           alt="">
+      <a href="/">
+        <img class="img-fluid"
+             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/250px-International_Pok%C3%A9mon_logo.svg.png"
+             alt="">
+      </a>
     </div>
     <div class="col-10 col-md-6 mx-auto mb-5">
       <div class="card p-3 col-6 mx-auto">
@@ -17,14 +19,15 @@
           <span v-show="!loading">
             <i class="fas fa-search"></i>
           </span>
-          <div v-show="loading" class="text-center">
-            <b-spinner variant="warning" label="Loading..."></b-spinner>
+          <div v-show="loading"
+               class="spinner-border text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
           </div>
         </button>
       </div>
-
-      <div v-show="loading" class="text-center  py-5">
-        <b-spinner type="grow" variant="warning" label="Loading..."></b-spinner>
+      <div v-show="loading"
+           class="spinner-grow text-warning mt-5" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
 
       <div v-show="!loading" class="card p-3">
@@ -173,8 +176,8 @@
 }
 
 #imgPoke {
-  max-width: 150px;
-  max-height: 150px
+  max-width: 100px;
+  max-height: 100px
 }
 
 #imgPoke2 {
