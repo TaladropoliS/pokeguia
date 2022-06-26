@@ -9,7 +9,7 @@
     </div>
     <div class="col-10 col-md-6 mx-auto mb-5">
       <div class="card p-3 col-6 mx-auto">
-        <input type="text" v-model="poke" @keyup.enter.p.prevent="llamarApiPokemon(poke)"
+        <input type="text" v-model="poke" @keyup.enter.prevent="llamarApiPokemon(poke)"
                class="form-control"
                placeholder="...buscar Pokemón"/>
         <button class="btn btn-primary btn-sm"
