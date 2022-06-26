@@ -28,11 +28,10 @@
       </div>
 
       <div v-show="!loading" class="card p-3">
-        <h3 v-if="pokemon['nombre'] === 'POKEMON NO EXISTE'"
-            class="text-uppercase fw-bold text-danger">
+
+        <h3 :class="pokemon['existe'] ? 'text-uppercase fw-bold':'text-uppercase fw-bold text-danger mt-5'">
           {{ pokemon['nombre'] }}
         </h3>
-        <h3 v-else class="text-uppercase fw-bold">{{ pokemon['nombre'] }}</h3>
 
 
         <img v-if="pokemon['imagen']!= null"
@@ -43,7 +42,8 @@
              class="img-fluid card-img-top mx-auto" width="auto" height="auto">
         <br>
 
-        <h5 v-if="pokemon['nombre'] !== 'POKEMON NO EXISTE'" class="text-center fw-bold">Habilidades</h5>
+<!--        <h5 v-if="pokemon['nombre'] !== 'POKEMON NO EXISTE'" class="text-center fw-bold">Habilidades</h5>-->
+        <h5 v-show="pokemon['existe']" class="text-center fw-bold">Habilidades</h5>
         <div class="row justify-content-center">
           <div class="card col-3 d-flex h6 my-auto mb-1"
                v-for="(hab, index) in pokemon['habilidades']">{{ hab }}
@@ -51,7 +51,7 @@
         </div>
 
         <br>
-        <h5 v-if="pokemon['nombre'] !== 'POKEMON NO EXISTE'" class="text-center fw-bold">Movimientos</h5>
+        <h5 v-show="pokemon['existe']" class="text-center fw-bold">Movimientos</h5>
         <div class="row justify-content-center">
           <div class="card col-3 d-flex h6 my-auto mb-1"
                v-for="(movi, index) in pokemon['movimientos']">{{ movi }}
@@ -77,6 +77,7 @@
           'habilidades': [],
           'imagen': [],
           'movimientos': [],
+          'existe': true,
         },
         nombres: [],
         poke: '',
@@ -90,10 +91,11 @@
       async llamarApiPokemon(pk) {
         this.loading = true;
         if (!pk) {
-          this.pokemon['nombre'] = 'POKEMON NO EXISTE'
+          this.pokemon['nombre'] = 'INGRESA UN POKÉMON'
           this.pokemon['habilidades'] = ''
           this.pokemon['imagen'] = ''
           this.pokemon['movimientos'] = ''
+          this.pokemon['existe'] = false
 
           this.loading = false;
         } else {
@@ -115,17 +117,20 @@
             this.pokemon['imagen'] = pokemonLlamado.sprites.front_default
 
             this.loading = false;
+            this.pokemon['existe'] = true
+
+            console.log(this.pokemon)
 
           } catch (error) {
-            this.pokemon['nombre'] = 'POKEMON NO EXISTE'
+            this.pokemon['nombre'] = 'POKÉMON NO EXISTE'
             this.pokemon['habilidades'] = ''
             this.pokemon['imagen'] = ''
             this.pokemon['movimientos'] = ''
             console.warn(error)
             this.poke = ''
             this.loading = false;
+            this.pokemon['existe'] = false
           }
-
         }
       },
 
@@ -137,7 +142,7 @@
           const nombresLlamadosResult = nombresLlamados.results
           for (let i of nombresLlamadosResult) {
             console.log(i['name'])
-            this.nombres.push(i['name'])
+            // this.nombres.push(i['name'])
           }
         } catch (error) {
           console.warn(error)
